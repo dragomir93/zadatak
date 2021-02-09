@@ -1,0 +1,32 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.fixed_img{
+  width: 300px;
+  height: 300px;
+}
+
+.small_img{
+  width: 100px;
+  height: 90px;
+}
+
+.small_input{
+  width: 60px;
+}
+
+.sub{
+margin-bottom:10px;
+}
+
+.sub1{
+margin-top:-88px;
+margin-left: 50px;
+}
+
+.qty{
+ width:55px;
+margin-top: 5px;
+}
