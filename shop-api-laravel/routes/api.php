@@ -3,9 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserCheckoutController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderHistoryController;
+use App\Http\Controllers\UsersController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,19 +18,18 @@ use App\Http\Controllers\OrderHistoryController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+  //  return $request->user();
+//});
+
+// Routes for web_shop db that do not require token 
+include('shop/routes_without_token.php');
+
+
+// Routes that require verified token
+Route::group(['middleware' => [\App\Http\Middleware\TokenAuth::class]], function(){
+    
+    // Routes for Iecom2 db that require token 
+    include('shop/routes_with_token.php');
+    
 });
-
-Route::get('/getAllArticles', [ArticleController::class, 'index']);
-Route::get('/article/{id}', [ArticleController::class, 'show']);
-Route::post('/userCheckout',[UserController::class,'store']);
-Route::post('/addtoCart',[CartController::class,'store']);
-Route::get('/getAllCart',[CartController::class,'index']);
-Route::get('/getCartNumber',[CartController::class,'total']);
-Route::delete('/deleteC art/{id}',[CartController::class,'delete']);
-Route::delete('/dropAll',[CartController::class,'dropAll']);
-Route::put('/update/cart/{id}',[CartController::class,'update']);
-Route::get('/show/order/history',[OrderHistoryController::class,'index']);
-Route::post('/add/order/history',[OrderHistoryController::class,'store']);
-

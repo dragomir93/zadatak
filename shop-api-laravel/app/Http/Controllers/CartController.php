@@ -19,6 +19,10 @@ class CartController extends Controller
         
     }
 
+    public function show($id){
+        return new CartCollection(Cart::where('id_cart',$id)->join('articles', 'cart.article_id', '=', 'articles.title')->get());
+    }
+
     public function store(Request $request) {
 
         $cart = Cart::create($request->all());
@@ -39,6 +43,7 @@ class CartController extends Controller
 
         $cart = $cart->delete();
 
+        return response()->json();
     }
 
     public function update(Request $request,$id)
@@ -53,9 +58,11 @@ class CartController extends Controller
         return response()->json(['quantity'=>$request->quantity]);
     }
 
-   public function dropAll(){
+    public function dropAll(){
      $cart = Cart::where('id_cart','>=','0');
 
     $cart = $cart->delete();
+
+    return response()->json();
    }
 }
